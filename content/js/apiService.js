@@ -1,4 +1,4 @@
-angular.module('services', []);
+var services = angular.module('services', []);
 
 /**
  *  The 'ProductPlatfomsSvc' service retrieves the platforms that the product is avalaible on. 

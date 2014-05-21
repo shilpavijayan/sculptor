@@ -1,4 +1,4 @@
-angular.module('controllers', ['services']);
+var controllers = angular.module('controllers', ['services']);
 
 controllers.controller('ProductPlatformsCtrl', ['$scope', 'ProductPlatformsSvc', function($scope, ProductPlatformsSvc) {
     $scope.productId = 0;
@@ -18,5 +18,5 @@ controllers.controller('ProductPlatformsCtrl', ['$scope', 'ProductPlatformsSvc',
 	    $scope.error = "Error fetching product platforms.";
 	});
     };	
-}
+}]);
 

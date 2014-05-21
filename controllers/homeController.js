@@ -1,12 +1,13 @@
-var db = require('./models');
+var db = require('../models');
 
 var home = function(request, response) {
     var successcb = function(products_json) {
 	response.render("home2", {
 	    title: "Home Page",
-	    products: products_json});
+	    products: products_json,
+	    categories: {id: 1, name: "Games"} });
 	};
-    var errcb = build_errfn('error retrieving products', response);
+    var errcb = errfn('error retrieving products', response);
     global.db.Product.allToJSON(successcb, errcb);
 //    response.render("home2", {
   //      title: "Home Page"
@@ -25,15 +26,16 @@ var platforms = function(request, response) {
     var successcb = function(platforms) {
 	response.json(platforms); 
     };
-    var errcb  = buils_errfn('error retrieving product platforms', response);
+    var errcb  = errfn('error retrieving product platforms', response);
     global.db.ProductPlatform.allToJSON(request.id, successcb, errcb);
 };
  
 var errfn = function(errmsg, response) {
-    return function errfn(err) {
+    return function(err) {
 	console.log(err);
 	response.send(errmsg);
-}
+    };	
+};
 
 exports.home = home;
 exports.about = about;

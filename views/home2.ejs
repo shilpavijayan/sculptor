@@ -9,25 +9,25 @@
   <body>
     <div id="home" data-type="background" data-speed="10" class="pages" ng-Controller="ProductPlatformsCtrl">
       <div id="home-categ" class="nav-home">
-	<%= for(var i=0; i < categories.length; i++) { %>
+	<% for(var i=0; i < categories.length; i++) { %>
 	<ul>
 	  <li value='<%= categories[i].id %>' ><%= categories[i].name %></li>
         </ul>
-	<%= } %>
+	<% } %>
       </div>
       <div id="panel" class="panel-home">
 	<h2 class="list-hdr"></h2>
-	<%= for(var i=0; i < categories.length; i++) { %>
+	<% for(var i=0; i < categories.length; i++) { %>
 	<div id="panel-list-"+<%= categories[i].id %> class="list-panel-home">
-	  <% for(var j = 0; j < products.length && products[j].category_id == categories[i].id ; j++) {%
+	  <% for(var j = 0; j < products.length && products[j].category_id == categories[i].id ; j++) { %>
           <div class="item-panel-home"> 
-	    <img src='<%= products[j].img_src %>' alt="Icon" />
+<!--	    <img src='<%= products[j].img_src %>' alt="Icon" /> -->
 	    <h2 class="item-hdr"><%= products[j].name %></h2>
 	    <p><%= producsts[j].desc %></p>
 	    <a href="#" class="btn download" ng-click="getPlatforms()">Download</a>
 	    <input type="hidden" name="panel-pid" value=<%= products[j].id %> >
 	  </div>  
-	  <%= } %>
+	  <% } %>
 	</div>	
         <% } %>
       </div>
@@ -62,9 +62,9 @@
              });
           });
 	  $('.btn.download').click(function() {
-	     $('#product_id').value($(this ~ 'input[name="panel-pid"').value());
+	     $('#product_id').value($('this ~ input[name="panel-pid"]').value());
 	  });   
-          $('#.nav-home li').click(function() {
+          $('.nav-home li').click(function() {
              var panel_id = "panel-list-" + $(this).value();
              $('.panel-home > h2.list-hdr').text($(this).text());
              $('.list-panel-home').addClass('hide');

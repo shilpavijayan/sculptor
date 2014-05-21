@@ -13,11 +13,11 @@ module.exports = function(sequelize, DataTypes) {
 		    return this.count().success(function(c) {
 			console.log("There are %s products", c);});
 		},
-		allToJson: function(successcb, errcb) {
+		allToJSON: function(successcb, errcb) {
 		    return this.findAll()
 		               .success(function(products) {
 				   successcb(uu.invoke(products, "toJSON"));
-                               })
+			       })
 		               .error(errcb);
 		}
 	    },	
