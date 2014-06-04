@@ -5,15 +5,12 @@ sudo apt-get install -y postgresql postgresql-contrib
 ln -sf `ls $PWD/.pgpass` -t $HOME
 chmod 600 $HOME"/.pgpass"
 
-echo "doesn't parse in toks currently - fix"
 PGPASS=`cat .pgpass`
-echo $PGPASS
-TOKS=(${PGPASS//:/})
-PG_HOST=${TOKS[0]}
-PG_PORT=${TOKS[1]}
-PG_DB=${TOKS[2]}
-PG_USER=${TOKS[3]}
-PG_PASS=${TOKS[4]}
+PG_HOST=$(echo $PGPASS | cut -d':' -f1)
+PG_PORT=$(echo $PGPASS | cut -d':' -f2)
+PG_DB=$(echo $PGPASS | cut -d':' -f3)
+PG_USER=$(echo $PGPASS | cut -d':' -f4)
+PG_PASS=$(echo $PGPASS | cut -d':' -f5)
 
 echo "\n\nInput the following password twice below: "${PG_PASS}
 sudo -u postgres createuser -U postgres -E -P -s $PG_USER
