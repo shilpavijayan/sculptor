@@ -5,7 +5,8 @@ var home = function(request, response) {
 	response.render("home2", {
 	    title: "Home Page",
 	    products: products_json,
-	    categories: {id: 1, name: "Games"} });
+	    categories: [{id: 1, name: "Games"},{id: 2, name: "Math"}] });
+            console.log(products_json);
 	};
     var errcb = errfn('error retrieving products', response);
     global.db.Product.allToJSON(successcb, errcb);

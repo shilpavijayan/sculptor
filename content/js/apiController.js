@@ -1,14 +1,13 @@
 var controllers = angular.module('controllers', ['services']);
 
 controllers.controller('ProductPlatformsCtrl', ['$scope', 'ProductPlatformsSvc', function($scope, ProductPlatformsSvc) {
-    $scope.productId = 0;
     $scope.getPlatforms  = function() {
-	if (productId == 0) {
+	if (!$scope.productId || $scope.productId == '0') {
 	    $scope.error = "Invalid product id." ;
 	    return;
         }
 
-	ProductPlatformsSvc.getProductPlatforms(productId).success(function(data, status, headers, config) {
+	ProductPlatformsSvc.getProductPlatforms($scope.productId).success(function(data, status, headers, config) {
 	    if (data.error) {
 		$scope.error = data.error;
 	    } else {

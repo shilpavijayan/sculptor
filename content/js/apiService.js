@@ -8,7 +8,7 @@ services.factory('ProductPlatformsSvc', ['$http', function($http) {
     var ProductPlatformsSvc = {};
     ProductPlatformsSvc.apiUrl = '/api/platforms?id=';
     ProductPlatformsSvc.getProductPlatforms = function(pid) { 
-       return $http.get(apiUrl + pid);
+       return $http.get(this.apiUrl + pid);
     };
 
     return ProductPlatformsSvc;
