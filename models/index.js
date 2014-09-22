@@ -1,3 +1,5 @@
+var dburl = require('../configs.js').databaseUrl();
+
 if (!global.hasOwnProperty('db')) {
     var  Sequelize = require('sequelize');
     var sq = null;
@@ -5,14 +7,21 @@ if (!global.hasOwnProperty('db')) {
     var path = require('path');
     var PGCONFIG_FILE = path.join(__dirname, '../.pgpass');
 
-    var pgtokens = fs.readFileSync(PGCONFIG_FILE).toString().trimRight().split(':');
-    var host = pgtokens[0];
-    var port = pgtokens[1];
-    var dbname = pgtokens[2];
-    var user  = pgtokens[3];
-    var password = pgtokens[4];
+ //   var pgtokens = fs.readFileSync(PGCONFIG_FILE).toString().trimRight().split(':');
+//    var host = pgtokens[0];
+//    var port = pgtokens[1];
+//    var dbname = pgtokens[2];
+//    var user  = pgtokens[3];
+//    var password = pgtokens[4];
+    var host = dburl.host;
+    var port = dburl.port;
+    var dbname = dburl.database;
+    var user = dburl.username;
+    var password = dburl.password;
+    var dialect = dburl.dialect;
+
     var config = {
-	dialect: 'postgres',
+	dialect: dialect,
 	protocol: 'postgres',
 	port: port,
 	host: host
