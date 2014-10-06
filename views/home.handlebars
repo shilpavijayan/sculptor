@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" ng-app="controllers">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="styleshePet" href="css/sculptor-styles.css">
+  </head>
+  <body>
+    <div id="home" data-type="background" data-speed="10" class="pages" data-ng-Controller="ProductPlatformsCtrl">
+
+      <div class="addthis_sharing_toolbox"></div>
+      <input type="hidden" name="category_id">
+      <input type="hidden" data-ng-model="productId" data-ng-init="productId='0'">
+      {{> product-categories }}
+      <div class="error"></div>
+      <div id="productlist" class="panel">
+	{{> product-list }} 
+      </div>
+      {{> about }}
+      </div>
+      <div id="footer" class="pages">
+	<p>Copyright &copy; 2014 Kanimats, Inc. All rights reserved.</p>
+      </div>	
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-528291a2496107be"></script>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/handlebars.runtime-v2.0.0.js"></script>
+    <script src="js/templates/product-platforms.js"></script>
+    <script src="js/templates/product-list.js"></script>
+    <script>
+      $(document).ready(function() {
+         $('.nav li').click(function() {
+            var categoryId = $(this).val();
+            var productList = $('div#listCtg-' + categoryId);
+            if (productList.length > 0) {
+               $('div#productlist div.list').addClass("hide");
+               productList.removeClass("hide");
+               //TODO: refresh slides for each productitem
+            } else {
+               // TODO: include fails callback and error message
+               services.get("products", {"category_id": categoryId}).done(function (data) {
+                  var template = Handlebars.templates['product-list'];
+                  var html = template(data);
+                  $('div#productlist').append(html);
+                  //TODO: toggle visibility between this newly added product list and other category lists
+                  $('div.productdetail').addClass('slidein');   //TODO: restrict to current list items
+                  $('div.productplatforms').addClass('slideout');
+               })
+               .fail(function () {
+                  $('div.error').append('<p>Error retrieving the product list</p>');
+               });
+            }
+         });
+         //TODO: work on slider class and positioning of divs, restrict to current parents slides
+         $('div.slider').click(function () {
+              $('div.slide').toggleClass('slidein slideout');
+         });
+         $('div[data-type="background"]').each(function() {
+              var $bgobj = $(this);
+              $(window).scroll(function() {
+                  var ypos = -($(this).scrollTop() / $bgobj.data('speed'));
+                  var coords = '50% ' + ypos + 'px';
+                  $bgobj.css({backgroundPosition: coords });
+             });
+          });
+      });
+    </script> 
+
+  </body>
+</html>
+    

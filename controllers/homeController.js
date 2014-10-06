@@ -2,17 +2,22 @@ var db = require('../models');
 
 var home = function(request, response) {
     var successcb = function(products_json) {
-	response.render("home2", {
+	response.render("home", {
 	    title: "Home Page",
-	    products: products_json,
+	    productlist: {category_id: "1", products: products_json},
 	    categories: [{id: 1, name: "Games"},{id: 2, name: "Math"}] });
             console.log(products_json);
 	};
     var errcb = errfn('error retrieving products', response);
     global.db.Product.allToJSON(successcb, errcb);
-//    response.render("home2", {
-  //      title: "Home Page"
-//    });*/
+};
+
+var products = function(request, response) {
+    var successcb = function(products_json) {
+	response.json({productlist: {category_id: "2", products: products_json}});
+     };
+    var errcb = errfn('error retrieving products', response);
+    global.db.Product.allToJSON(successcb, errcb);
 };
 
 var about = function(request, response) {
@@ -42,4 +47,5 @@ exports.home = home;
 exports.about = about;
 exports.contact = contact;
 exports.platforms = platforms;
+exports.products = products;
 

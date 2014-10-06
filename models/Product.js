@@ -17,8 +17,8 @@ module.exports = function(sequelize, DataTypes) {
 		    return this.findAll()
 		               .success(function(products) {
 				   successcb(uu.invoke(products, "toJSON"));
-			       })
-		               .error(errcb);
+                               })
+			       .error(errcb);
 		}
 	    },	
 	    instanceMethods: {

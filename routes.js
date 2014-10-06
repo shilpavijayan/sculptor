@@ -12,6 +12,7 @@ var map_routes = function(dict) {
     
 var ROUTES = map_routes({
     '/': homeController.home,
+    '/api/products': homeController.products,
     '/api/platforms': homeController.platforms,
     '/contact': homeController.contact,
     '/about': homeController.about
