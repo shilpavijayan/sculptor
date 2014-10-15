@@ -13,13 +13,21 @@ module.exports = function(sequelize, DataTypes) {
 		    return this.count().success(function(c) {
 			console.log("There are %s products", c);});
 		},
+                //TODO: remove function
 		allToJSON: function(successcb, errcb) {
 		    return this.findAll()
 		               .success(function(products) {
 				   successcb(uu.invoke(products, "toJSON"));
                                })
 			       .error(errcb);
-		}
+		},
+                findByCategoryId: function (cid, successfn, errfn) {
+		    return this.find({ where: {category_id: cid} })
+			       .success(function (products) {
+				   successfn(products); 
+			       })
+		               .error(errfn);
+		}		   
 	    },	
 	    instanceMethods: {
 		getID: function() {

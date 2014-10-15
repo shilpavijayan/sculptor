@@ -10,3 +10,4 @@ config/**
 /*#
 content/js/.#*
 npm-debug.log
+data/imports/**

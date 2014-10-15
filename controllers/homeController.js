@@ -1,23 +1,24 @@
 var db = require('../models');
 
 var home = function(request, response) {
-    var successcb = function(products_json) {
+    var successcb = function(products) {
 	response.render("home", {
 	    title: "Home Page",
-	    productlist: {category_id: "1", products: products_json},
-	    categories: [{id: 1, name: "Games"},{id: 2, name: "Math"}] });
-            console.log(products_json);
+	    productlist: {"category_id": "1", "products": products},
+	    categories: [{"id": "1", "name": "Games"},{"id": 2, "name": "Math"}] });
+            console.log(products);
 	};
     var errcb = errfn('error retrieving products', response);
     global.db.Product.allToJSON(successcb, errcb);
 };
 
 var products = function(request, response) {
-    var successcb = function(products_json) {
-	response.json({productlist: {category_id: "2", products: products_json}});
+    var category_id = request.query.category_id || -1;
+    var successcb = function(products) {
+	response.json({"productlist": {"category_id": category_id, "products": [products]}});
      };
     var errcb = errfn('error retrieving products', response);
-    global.db.Product.allToJSON(successcb, errcb);
+    global.db.Product.findByCategoryId(category_id, successcb, errcb);
 };
 
 var about = function(request, response) {

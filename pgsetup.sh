@@ -15,3 +15,6 @@ PG_PASS=$(echo $PGPASS | cut -d':' -f5)
 echo "\n\nInput the following password twice below: "${PG_PASS}
 sudo -u postgres createuser -U postgres -E -P -s $PG_USER
 sudo -u postgres createdb -U postgres -O $PG_USER $PG_DB
+
+# insert seed data in the newly created database
+./seed.sh -d $PG_DB -ss $PG_HOST -u $PG_USER
