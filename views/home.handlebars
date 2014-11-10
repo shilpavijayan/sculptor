@@ -7,7 +7,7 @@
     <link rel="styleshePet" href="css/sculptor-styles.css">
   </head>
   <body>
-    <div id="home" data-type="background" data-speed="10" class="pages" data-ng-Controller="ProductPlatformsCtrl">
+    <div id="home-page" data-type="background" data-speed="10" class="pages" data-ng-Controller="ProductPlatformsCtrl">
 
       <div class="addthis_sharing_toolbox"></div>
       <input type="hidden" name="category_id">
@@ -28,9 +28,11 @@
     <script src="js/handlebars.runtime-v2.0.0.js"></script>
     <script src="js/templates/product-platforms.js"></script>
     <script src="js/templates/product-list.js"></script>
+    <script src="js/templates/inline-error.js"></script>
     <script>
       $(document).ready(function() {
          $('.nav li').click(function() {
+            $('div.error').empty();
             var categoryId = $(this).val();
             var productList = $('div#listCtg-' + categoryId);
             if (productList.length > 0) {
@@ -39,7 +41,7 @@
                //TODO: refresh slides for each productitem
             } else {
                // TODO: include fails callback and error message
-               services.get("products", {"category_id": categoryId}).done(function (data) {
+               services.get("products", {"category_id": categoryId}, "json").done(function (data) {
                   var template = Handlebars.templates['product-list'];
                   var html = template(data);
                   $('div#productlist').append(html);
@@ -47,8 +49,10 @@
                   $('div.productdetail').addClass('slidein');   //TODO: restrict to current list items
                   $('div.productplatforms').addClass('slideout');
                })
-               .fail(function () {
-                  $('div.error').append('<p>Error retrieving the product list</p>');
+               .fail(function (jqxhr) {
+                  var error_template = Handlebars.templates['inline-error'];
+                  var errhtml = error_template(jqxhr.responseText);
+                  $('div.error').empty().append(errhtml);
                });
             }
          });

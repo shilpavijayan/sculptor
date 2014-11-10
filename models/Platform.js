@@ -18,8 +18,10 @@ module.exports = function(sequelize, DataTypes) {
 		           .success(function(platforms) {
 			       successcb(uu.invoke(platforms, "toJSON"));
 			   })
-		           .error(errcb);
-            },
+		           .error(function () {
+			       errcb(new Error('Could not retrieve platform list. Internal Server Error.'));
+			   });    
+            } 
         },
 	instanceMethods: {
 	    getID: function() {
