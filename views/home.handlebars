@@ -41,7 +41,7 @@
                //TODO: refresh slides for each productitem
             } else {
                // TODO: include fails callback and error message
-               services.get("products", {"category_id": categoryId}, "json").done(function (data) {
+               api.get("products", {"category_id": categoryId}, "json").done(function (data) {
                   var template = Handlebars.templates['product-list'];
                   var html = template(data);
                   $('div#productlist').append(html);
@@ -51,7 +51,7 @@
                })
                .fail(function (jqxhr) {
                   var error_template = Handlebars.templates['inline-error'];
-                  var errhtml = error_template(jqxhr.responseText);
+                  var errhtml = error_template(jqxhr.responseJSON);
                   $('div.error').empty().append(errhtml);
                });
             }

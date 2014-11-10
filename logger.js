@@ -44,7 +44,8 @@ var errorSerializer = function (err) {
 	requestId: err.requestId
     };
 };
-	
+
+// TODO: create streams if non existent	
 var logger = bunyan.createLogger({
     name: "slog",
     serializers: {

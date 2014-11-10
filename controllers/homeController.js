@@ -1,5 +1,6 @@
 var db = require('../models');
-var ApplicationError = require('../errors.js');
+var ApplicationError = require('../errors.js').ApplicationError;
+var ErrorTypes = require('../errors.js').ErrorTypes;
 
 var home = function (request, response, next) {
     var successcb = function (products) {
@@ -17,7 +18,7 @@ var products = function (request, response, next) {
     try {
 	var category_id = request.query.category_id;
 	if (!category_id)
-	    return next(new ApplicationError({'name': 'InvalidArgumentError', 'message': 'Could not retrieve product list. No category selected.'}));
+	    return next(new ApplicationError({'name': ErrorTypes.InvalidArgumentError, 'message': 'Could not retrieve product list. No category selected.'}));
 
 	var successcb = function (products) {
 	    response.json({"productlist": {"category_id": category_id, "products": [products]}});

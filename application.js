@@ -5,7 +5,8 @@ var express = require('express')
   , logger = require('./logger.js')
   , uuid = require('uuid')
   , hbsutils = require('./content/js/hbsutils.js')
-  , ApplicationError = require('./errors.js')
+  , ApplicationError = require('./errors.js').ApplicationError
+  , ErrorTypes = require('./errors.js').ErrorTypes
   ;
 
 var init_application = function(routes) {
@@ -47,7 +48,7 @@ var init_application = function(routes) {
     // error handler middleware
     expressApp.all('*', function(request, response, next) {
         var msg = "Could not find the resource " + request.originalUrl;
-	next(new ApplicationError({'name': 'ResourceNotFound', 'message': msg, 'logMessage': msg}));
+	next(new ApplicationError({'name': ErrorTypes.ResourceNotFoundError, 'message': msg, 'logMessage': msg}));
     });
 	     
     expressApp.use(function (error, request, response, next) {
