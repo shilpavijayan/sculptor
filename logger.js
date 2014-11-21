@@ -45,7 +45,7 @@ var errorSerializer = function (err) {
     };
 };
 
-// TODO: create streams if non existent	
+// TODO: setup shell script to create streams if non existent	and config vars to store log file path and names
 var logger = bunyan.createLogger({
     name: "slog",
     serializers: {

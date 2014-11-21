@@ -8,6 +8,7 @@ var db = require('./models');
 var server = http.createServer(app);
 var startserver = function() {
 
+//    global.db.sequelize.sync({ force: true }).complete(function(err) {
     global.db.sequelize.authenticate().complete(function(err) {
 	if (err) {
 	    console.log("An error occurred: ", err);

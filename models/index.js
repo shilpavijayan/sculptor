@@ -3,16 +3,7 @@ var dburl = require('../configs.js').databaseUrl();
 if (!global.hasOwnProperty('db')) {
     var  Sequelize = require('sequelize');
     var sq = null;
-    var fs = require('fs');
-    var path = require('path');
-    var PGCONFIG_FILE = path.join(__dirname, '../.pgpass');
 
- //   var pgtokens = fs.readFileSync(PGCONFIG_FILE).toString().trimRight().split(':');
-//    var host = pgtokens[0];
-//    var port = pgtokens[1];
-//    var dbname = pgtokens[2];
-//    var user  = pgtokens[3];
-//    var password = pgtokens[4];
     var host = dburl.host;
     var port = dburl.port;
     var dbname = dburl.database;
@@ -35,19 +26,15 @@ if (!global.hasOwnProperty('db')) {
 	Platform: sq.import(__dirname + '/Platform'),
 	ProductCategory: sq.import(__dirname + '/ProductCategory'),
 	ProductAsset: sq.import(__dirname + '/ProductAsset'),
-	ProductPlatform: sq.import(__dirname + '/ProductPlatform'),
-/*      setAssociations: function() {
-///	    var product=this.Product, asset=this.ProductAsset, platform=this.Platform, category=this.ProductCategory;
-//
-  //          product.hasMany(asset);
-	    product.hasMany(platform);
-	    platform.hasMany(product);
-	    category.hasMany(product);
-	    
-	    return;
-	}*/
+        ProductPlatform: sq.import(__dirname + '/ProductPlatform'),
+        setAssociations: function () {
+            this.Product.hasMany(this.ProductAsset, {onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+	    this.Product.hasMany(this.Platform, {through: this.ProductPlatform, onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+	    this.Platform.hasMany(this.Product, {through: this.ProductPlatform, onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+	    this.Product.belongsTo(this.ProductCategory, {foreignKey: 'category_id', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+         }
      };
-//    global.db.setAssociations();
+    global.db.setAssociations();
 }
 
 module.exports = global.db;

@@ -5,8 +5,8 @@ var express = require('express')
   , logger = require('./logger.js')
   , uuid = require('uuid')
   , hbsutils = require('./content/js/hbsutils.js')
-  , ApplicationError = require('./errors.js').ApplicationError
-  , ErrorTypes = require('./errors.js').ErrorTypes
+  , ApplicationError = require('./errors.js')
+  , ErrorTypes = require('./constants.js').ErrorTypes
   ;
 
 var init_application = function(routes) {
@@ -19,7 +19,7 @@ var init_application = function(routes) {
     expressApp.use(express.static(path.join(__dirname, 'content')));
     hbsutils.registerPartials(__dirname + '/views/partials');
     hbsutils.registerHelpers();
-   
+
     // logging middleware
     expressApp.use(function (request, response, next) {
 	var requestStart = Date.now();

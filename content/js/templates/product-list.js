@@ -1,10 +1,10 @@
 (function() {
   var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
 templates['product-list'] = template({"1":function(depth0,helpers,partials,data) {
-  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "    <div id=\"product-"
+  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, lambda=this.lambda, buffer = "    <div id=\"product-"
     + escapeExpression(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"id","hash":{},"data":data}) : helper)))
-    + "\" class=\"item\">\n      <div class=\"slider prev\" title=\"detail\"><span><--Details</span></div>\n      <div class=\"slider next\" title=\"download\"><span>Get this--></span></div>\n      <div id=\"productdetail\" class=\"slide\"> \n        <!--       <img src='"
-    + escapeExpression(((helper = (helper = helpers.img_src || (depth0 != null ? depth0.img_src : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"img_src","hash":{},"data":data}) : helper)))
+    + "\" class=\"item\">\n      <div class=\"slider prev\" title=\"detail\"><span><--Details</span></div>\n      <div class=\"slider next\" title=\"download\"><span>Get this--></span></div>\n      <div id=\"productdetail\" class=\"slide\"> \n        <!-- <img src='"
+    + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.productAssets : depth0)) != null ? stack1.source : stack1), depth0))
     + "' alt=\"Icon\" /> -->\n        <h2 class=\"item-hdr\">"
     + escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"name","hash":{},"data":data}) : helper)))
     + "</h2>\n        <p>"

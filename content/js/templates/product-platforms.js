@@ -1,11 +1,11 @@
 (function() {
   var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
 Handlebars.partials['product-platforms'] = template({"1":function(depth0,helpers,partials,data) {
-  var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+  var stack1, helper, lambda=this.lambda, escapeExpression=this.escapeExpression, functionType="function", helperMissing=helpers.helperMissing;
   return "        <div class=\"subitem\"> 	     \n          <a href="
-    + escapeExpression(((helper = (helper = helpers.link || (depth0 != null ? depth0.link : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"link","hash":{},"data":data}) : helper)))
+    + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.productPlatform : depth0)) != null ? stack1.link_url : stack1), depth0))
     + " class=\"btn linkto\"><img src="
-    + escapeExpression(((helper = (helper = helpers.img_src || (depth0 != null ? depth0.img_src : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"img_src","hash":{},"data":data}) : helper)))
+    + escapeExpression(((helper = (helper = helpers.image_src || (depth0 != null ? depth0.image_src : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"image_src","hash":{},"data":data}) : helper)))
     + " alt="
     + escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"name","hash":{},"data":data}) : helper)))
     + " /></a>\n          <div class=\"itm-grp\">\n               <h3>"

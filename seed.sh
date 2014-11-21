@@ -48,11 +48,11 @@ productplatform=data/imports/productplatforms.csv
 echo "Importing Platform..."
 psql -d $database -h $host -U $user -c '\copy "Platform" from ./data/imports/platforms.csv with csv HEADER'
 
-echo "Importing Product..." 
-psql -d $database -h $host -U $user -c '\copy "Product" from ./data/imports/products.csv with csv HEADER'
-
 echo "Importing ProductCategory..."
 psql -d $database -h $host -U $user -c '\copy "ProductCategory" from ./data/imports/productcategories.csv with csv HEADER'
+
+echo "Importing Product..." 
+psql -d $database -h $host -U $user -c '\copy "Product" from ./data/imports/products.csv with csv HEADER'
 
 echo "Importing ProductAsset..."
 psql -d $database -h $host -U $user -c '\copy "ProductAsset" from ./data/imports/productassets.csv with csv HEADER'

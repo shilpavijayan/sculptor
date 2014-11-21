@@ -1,27 +1,16 @@
-var async = require('async');
 var util = require('util');
-var uu = require('underscore');
 
 module.exports = function(sequelize, DataTypes) {
     return sequelize.define('Platform', {
 	name: {type: DataTypes.STRING, allowNull: false, unique: true},
-	desc: {type: DataTypes.TEXT},
-	typ: {type: DataTypes.ENUM, values: ['Mobile', 'Tablets', 'DeskTop']}
-    }, {
+	desc: {type: DataTypes.TEXT, allowNull: false},
+	image_src: {type: DataTypes.STRING, allowNull: false},
+	type: {type: DataTypes.ENUM, values: ['Mobile', 'Tablets', 'DeskTop'], allowNull: false}
+        }, {
 	classMethods: {
 	    getCount: function() {
-		return this.count().success(function(c) {
-		    console.log("There are %s platforms", c);});
-	    },
-	    allToJSON: function(successcb, errcb) {
-		return this.findall()
-		           .success(function(platforms) {
-			       successcb(uu.invoke(platforms, "toJSON"));
-			   })
-		           .error(function () {
-			       errcb(new Error('Could not retrieve platform list. Internal Server Error.'));
-			   });    
-            } 
+		return this.count();
+	    }
         },
 	instanceMethods: {
 	    getID: function() {
