@@ -22,11 +22,11 @@ if (!global.hasOwnProperty('db')) {
     global.db = {
 	Sequelize: Sequelize,
 	sequelize: sq,
-	Product: sq.import(__dirname + '/Product'),
-	Platform: sq.import(__dirname + '/Platform'),
-	ProductCategory: sq.import(__dirname + '/ProductCategory'),
-	ProductAsset: sq.import(__dirname + '/ProductAsset'),
-        ProductPlatform: sq.import(__dirname + '/ProductPlatform'),
+	Product: sq.import(__dirname + '/product'),
+	Platform: sq.import(__dirname + '/platform'),
+	ProductCategory: sq.import(__dirname + '/category'),
+	ProductAsset: sq.import(__dirname + '/asset'),
+        ProductPlatform: sq.import(__dirname + '/product-platform'),
         setAssociations: function () {
             this.Product.hasMany(this.ProductAsset, {onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 	    this.Product.hasMany(this.Platform, {through: this.ProductPlatform, onDelete: 'CASCADE', onUpdate: 'CASCADE' });
