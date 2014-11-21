@@ -39,7 +39,7 @@ var products = function (request, response, next) {
       return next(new ApplicationError({ 
 	'name': ErrorTypes.InvalidArgumentError, 
 	'message': 'Could not retrieve product list. Not a valid category.',
-	'logMessage': 'file: homeController, method: products, error: Argument category_id is missing or invalid'
+	'logMessage': 'Argument category_id is missing or invalid'
       }));
     }
 
