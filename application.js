@@ -9,6 +9,9 @@ var express = require('express')
   , ErrorTypes = require('./constants.js').ErrorTypes
   ;
 
+// TODO: Standardize ApplicationError message and logMessage
+// TODO: include try and catch throughout application.
+
 var init_application = function(routes) {
     var expressApp = express();
 

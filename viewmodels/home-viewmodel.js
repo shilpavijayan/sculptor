@@ -1,6 +1,11 @@
 var db = require('../models');
 var ApplicationError = require('../errors.js');
 var ErrorTypes = require('../constants.js').ErrorTypes;
+var mcConfig = require('../configs.js').memcachedConfig();
+var Memcached = require('memcached');
+var memcached = new Memcached(mcConfig.servers, mcConfig.options);
+var cachetimeout = mcConfig.timeout;
+// TODO: log memcache write failures
 
 exports.HomeViewmodel = (function () {
   return {
@@ -24,25 +29,33 @@ exports.HomeViewmodel = (function () {
           'propertyValue': 'undefined or not a fucntion'
         });
       }
+      var cacheKey = 'categs';
 
-      global.db.ProductCategory
-        .findAll()
-        .success(function (categories) {
-	  if (!categories || categories.length === 0) {
-            errcb(new ApplicationError({
-	      'name': ErrorTypes.DataError,
-	       'message': 'Could not retrieve categories list. Internal server error.'
-            }));
- 	  } else {
-	    successcb(categories);
+      memcached.get(cacheKey, function (err, categories) {
+	  if (!err && categories) {
+	      successcb(categories);
+          } else {
+	      global.db.ProductCategory
+		  .findAll()
+		  .success(function (categories) {
+	              if (!categories || categories.length === 0) {
+			  errcb(new ApplicationError({
+			      'name': ErrorTypes.DataError,
+			      'message': 'Could not retrieve categories list. Internal server error.'
+			  }));
+ 		      } else {
+			  memcached.set(cacheKey, categories, cachetimeout, function (err) { return; });
+			  successcb(categories);
+		      }
+		  })
+		  .error(function () {
+		      errcb(new ApplicationError({
+			  'name': ErrorTypes.DataError,
+			  'message': 'Could not retrieve categories list. Internal server error.'
+		      }));
+		  });       
           }
-         })
-         .error(function () {
-           errcb(new ApplicationError({
-	     'name': ErrorTypes.DataError,
-              'message': 'Could not retrieve categories list. Internal server error.'
-           }));
-          });       
+     });
     },
     getProductsByCategory: function (options, successcb, errcb) {
       if (!successcb || typeof successcb !== "function") {
@@ -78,31 +91,39 @@ exports.HomeViewmodel = (function () {
             'propertyValue': 'undefined'
            }));
          }
-
-      global.db.Product
-	.findAll({
-          where: {category_id: options.cid},
-          include: [
-	      { model: global.db.ProductAsset, where: options.assets },
-	      { model: global.db.Platform, where: options.platforms }
-          ]
-         })
-        .success(function (products) {
-	  if (!products || products.length === 0) {
-            errcb(new ApplicationError({
-              'name': ErrorTypes.DataError,
-              'message': 'No products found for this category.'
-            }));
-          } else {
-	    successcb(products);
-          }
-        }) 
-        .error(function () {
-          errcb(new ApplictionError({
-            'name': ErrorTypes.DataError,
-            'message': 'Could not retrieve product list. Internal server error.'
-          }));
-        });
+      var cacheKey = 'products_'+ options.cid;
+	
+      memcached.get(cacheKey, function (err, products) {
+        if (!err && products) {
+	  successcb(products);
+        } else {    
+	  global.db.Product
+		.findAll({
+		    where: {category_id: options.cid},
+		    include: [
+			{ model: global.db.ProductAsset, where: options.assets },
+			{ model: global.db.Platform, where: options.platforms }
+		    ]
+		})
+		.success(function (products) {
+		    if (!products || products.length === 0) {
+			errcb(new ApplicationError({
+			    'name': ErrorTypes.DataError,
+			    'message': 'No products found for this category.'
+			}));
+		    } else {
+                        memcached.set(cacheKey, products, cachetimeout, function (err) { return; });
+			successcb(products);
+		    }
+		}) 
+		.error(function () {
+		    errcb(new ApplictionError({
+			'name': ErrorTypes.DataError,
+			'message': 'Could not retrieve product list. Internal server error.'
+		    }));
+		});
+	}
+     });    
     }
   }; 
 
