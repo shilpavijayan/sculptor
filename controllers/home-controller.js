@@ -1,6 +1,6 @@
-var consts = require('../constants.js');
+var consts = require('../lib/constants.js');
 var HomeViewmodel = require('../viewmodels/home-viewmodel.js').HomeViewmodel;
-var ApplicationError = require('../errors.js');
+var ApplicationError = require('../lib/errors.js');
 
 var ErrorTypes = consts.ErrorTypes;
 var Constants = consts.Constants;

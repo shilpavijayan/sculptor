@@ -1,6 +1,7 @@
-(function() {
-  var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
-Handlebars.partials['product-platforms'] = template({"1":function(depth0,helpers,partials,data) {
+this["sculptor"] = this["sculptor"] || {};
+this["sculptor"]["templates"] = this["sculptor"]["templates"] || {};
+
+this["sculptor"]["templates"]["views/partials/product-platforms.handlebars"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
   var stack1, helper, lambda=this.lambda, escapeExpression=this.escapeExpression, functionType="function", helperMissing=helpers.helperMissing;
   return "        <div class=\"subitem\"> 	     \n          <a href="
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.productPlatform : depth0)) != null ? stack1.link_url : stack1), depth0))
@@ -21,4 +22,3 @@ Handlebars.partials['product-platforms'] = template({"1":function(depth0,helpers
   if (stack1 != null) { buffer += stack1; }
   return buffer + "</div>  ";
 },"useData":true});
-})();

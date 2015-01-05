@@ -1,4 +1,4 @@
-var dburl = require('../configs.js').databaseUrl();
+var dburl = require('../lib/configs.js').databaseUrl();
 
 if (!global.hasOwnProperty('db')) {
     var  Sequelize = require('sequelize');

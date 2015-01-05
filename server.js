@@ -1,34 +1,41 @@
 #!/usr/bin/node
 
-var request = require('request');
-var http = require('http');
-var app = require('./application');
-var db = require('./models');
+var request = require('request')
+  ,  http = require('http')
+  , app = require('./application')
+  , db = require('./models')
+  , server = http.createServer(app)
+  , logger = require('./lib/logger.js')
+  ;
 
-var server = http.createServer(app);
 var startserver = function() {
 
-// TODO: cleanup logging and db connection
-//    global.db.sequelize.sync({ force: true }).complete(function(err) {
+// TODO: cleanup db connection
+//  global.db.sequelize.sync({ force: true }).complete(function(err) {
     global.db.sequelize.authenticate().complete(function(err) {
 	if (err) {
-	    console.log("An error occurred: ", err);
+	    logger.error({ err: err }, "Database connection failed, could not start server");
 	} else {
 	    server.listen(app.get('port'), function() {
-		console.log("Listening on " + app.get('port'));
+		logger.info({ server_status: "Listening on " + app.get('port') });
 	    });
 	}
     });
 };
 
 var stopserver = function() {
+    var cleanuptimer = setTimeout(function () {
+	process.exit(1);
+    }, 30000);
+    cleanuptimer.unref();  
+
     server.close();
 };
 
 if (require.main === module) {
     startserver();
 } else {
-    console.info("Running application as a module");
+    // run application as a module
     exports.startserver = startserver;
     exports.stopserver = stopserver;
     exports.port = app.get('port');

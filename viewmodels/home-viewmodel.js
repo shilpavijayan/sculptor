@@ -1,7 +1,7 @@
 var db = require('../models');
-var ApplicationError = require('../errors.js');
-var ErrorTypes = require('../constants.js').ErrorTypes;
-var mcConfig = require('../configs.js').memcachedConfig();
+var ApplicationError = require('../lib/errors.js');
+var ErrorTypes = require('../lib/constants.js').ErrorTypes;
+var mcConfig = require('../lib/configs.js').memcachedConfig();
 var Memcached = require('memcached');
 var memcached = new Memcached(mcConfig.servers, mcConfig.options);
 var cachetimeout = mcConfig.timeout;

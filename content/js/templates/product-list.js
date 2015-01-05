@@ -1,6 +1,7 @@
-(function() {
-  var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
-templates['product-list'] = template({"1":function(depth0,helpers,partials,data) {
+this["sculptor"] = this["sculptor"] || {};
+this["sculptor"]["templates"] = this["sculptor"]["templates"] || {};
+
+this["sculptor"]["templates"]["views/partials/product-list.handlebars"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
   var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, lambda=this.lambda, buffer = "    <div id=\"product-"
     + escapeExpression(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"id","hash":{},"data":data}) : helper)))
     + "\" class=\"item\">\n      <div class=\"slider prev\" title=\"detail\"><span><--Details</span></div>\n      <div class=\"slider next\" title=\"download\"><span>Get this--></span></div>\n      <div id=\"productdetail\" class=\"slide\"> \n        <!-- <img src='"
@@ -23,4 +24,3 @@ templates['product-list'] = template({"1":function(depth0,helpers,partials,data)
   if (stack1 != null) { buffer += stack1; }
   return buffer + "</div>";
 },"usePartial":true,"useData":true});
-})();

@@ -1,12 +1,12 @@
 var express = require('express')
   , path = require('path')
-  , ROUTES = require('./routes')
+  , ROUTES = require('./lib/routes')
   , cons = require('consolidate')
-  , logger = require('./logger.js')
+  , logger = require('./lib/logger.js')
   , uuid = require('uuid')
-  , hbsutils = require('./content/js/hbsutils.js')
-  , ApplicationError = require('./errors.js')
-  , ErrorTypes = require('./constants.js').ErrorTypes
+  , hbsutils = require('./lib/hbsutils.js')
+  , ApplicationError = require('./lib/errors.js')
+  , ErrorTypes = require('./lib/constants.js').ErrorTypes
   ;
 
 // TODO: Standardize ApplicationError message and logMessage
@@ -44,7 +44,7 @@ var init_application = function(routes) {
     }
 
     // router middleware
-    for(var ii in ROUTES) {
+    for (var ii in ROUTES) {
 	expressApp.get(ROUTES[ii].path, ROUTES[ii].fn);
     }
 
@@ -75,7 +75,8 @@ var init_application = function(routes) {
     expressApp.use(function (error, request, response, next) {
 	response.status(500);
         response.render('error', { "title": "Error Page", "error": error.message });
-    });
+   });
+
 		   
     return expressApp;
 };
